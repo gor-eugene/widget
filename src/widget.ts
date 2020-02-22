@@ -44,7 +44,7 @@ export class Widget implements WidgetInterface {
   }
 
   // метод проверки доступа
-  can(rule: string, def: boolean): boolean {
+  can(rule: string, def?: boolean): boolean {
     try {
       if (this.accountUser && this.accountUser.isOwner) {
         return true
