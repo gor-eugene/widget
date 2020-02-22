@@ -1,4 +1,4 @@
-import { WidgetInterface } from './Widget'
+import { Widget } from '../widget'
 
 export enum ProductTabsStrategy {
   REPLACE = 'replace',
@@ -8,8 +8,8 @@ export enum ProductTabsStrategy {
 export interface ProductTabsItem {
   title: string
   alias: string
-  active: (widget: WidgetInterface) => boolean
-  callback: (tab: ProductTabsItem, widget: WidgetInterface) => void
+  active: (widget: Widget) => boolean
+  callback: (tab: ProductTabsItem, widget: Widget) => void
 }
 
 export interface ProductTabs {
