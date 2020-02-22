@@ -3,18 +3,17 @@ import {
   Sources,
   AccountUserInterface,
   ProductInterface,
-  AccountProductInterface,
-  AccessRules,
-  ProductTabs,
-  WidgetInterface
+  AccountProductInterface
 } from '@amodev/interfaces'
-import { LogTypes, ConstructOptions } from './interfaces/Widget'
+import { LogTypes, ConstructOptions, WidgetInterface } from './interfaces/Widget'
+import { AccessRules } from './interfaces/AccessRules'
+import { ProductTabs } from './interfaces/ProductTabs'
 
 export class Widget implements WidgetInterface {
   uuid: string = ''
   widget: any = null
   source: Sources = Sources.HUB
-  debug: boolean
+  debug: boolean = false
   account: Account | null = null
   accountUser: AccountUserInterface | null = null
   product: ProductInterface | null = null
@@ -43,8 +42,11 @@ export class Widget implements WidgetInterface {
     })
   }
 
+  // метод инициализации
+  initialize() {}
+
   // метод проверки доступа
-  can(rule: string, def?: boolean): boolean {
+  can(rule: string, def: boolean = false): boolean {
     try {
       if (this.accountUser && this.accountUser.isOwner) {
         return true

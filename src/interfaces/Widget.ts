@@ -3,10 +3,10 @@ import {
   Sources,
   AccountUserInterface,
   ProductInterface,
-  AccountProductInterface,
-  ProductTabs,
-  AccessRules
+  AccountProductInterface
 } from '@amodev/interfaces'
+import { ProductTabs } from './ProductTabs'
+import { AccessRules } from './AccessRules'
 
 export enum LogTypes {
   DEFAULT = 'log',
