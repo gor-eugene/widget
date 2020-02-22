@@ -1,6 +1,6 @@
 {
   "name": "@amodev/widget",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Базовый класс и хэлперы для публикации продукта в маркетплейсе AmoDEV",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@amodev/interfaces": "^1.0.5",
+    "@amodev/interfaces": "^1.0.7",
     "axios": "^0.19.2"
   }
 }

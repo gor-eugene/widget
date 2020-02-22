@@ -8,7 +8,7 @@ import {
   ProductTabs,
   WidgetInterface
 } from '@amodev/interfaces'
-import { LogTypes, ConstructOptions } from './interfaces'
+import { LogTypes, ConstructOptions } from './interfaces/Widget'
 
 export class Widget implements WidgetInterface {
   uuid: string = ''
