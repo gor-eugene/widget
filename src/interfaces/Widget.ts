@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios'
 import {
   Sources,
+  AccountInterface,
   AccountUserInterface,
   ProductInterface,
   AccountProductInterface
@@ -21,7 +22,7 @@ export interface WidgetInterface {
   widget: any
   source: Sources
   debug: boolean
-  account: Account | null
+  account: AccountInterface | null
   accountUser: AccountUserInterface | null
   product: ProductInterface | null
   accountProduct: AccountProductInterface | null
@@ -40,7 +41,7 @@ export interface WidgetInterface {
 export interface ConstructOptions {
   source?: Sources
   debug?: boolean
-  account?: Account
+  account?: AccountInterface
   accountUser?: AccountUserInterface
   product?: ProductInterface
   accountProduct?: AccountProductInterface

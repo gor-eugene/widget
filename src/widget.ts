@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import {
   Sources,
+  AccountInterface,
   AccountUserInterface,
   ProductInterface,
   AccountProductInterface
@@ -14,7 +15,7 @@ export class Widget implements WidgetInterface {
   widget: any = null
   source: Sources = Sources.HUB
   debug: boolean = false
-  account: Account | null = null
+  account: AccountInterface | null = null
   accountUser: AccountUserInterface | null = null
   product: ProductInterface | null = null
   accountProduct: AccountProductInterface | null = null
