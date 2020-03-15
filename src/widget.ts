@@ -6,7 +6,13 @@ import {
   ProductInterface,
   AccountProductInterface
 } from '@amodev/interfaces'
-import { LogTypes, ConstructOptions, WidgetInterface } from './interfaces/Widget'
+import {
+  LogTypes,
+  ConstructOptions,
+  WidgetInterface,
+  AmoUser,
+  AmoUserGroup
+} from './interfaces/Widget'
 import { AccessRules } from './interfaces/AccessRules'
 import { ProductTabs } from './interfaces/ProductTabs'
 
@@ -39,6 +45,11 @@ export class Widget implements WidgetInterface {
 
     this.$amodevApi.interceptors.request.use(config => {
       config.headers['x-amo-token'] = this.accountUser && this.accountUser.token
+
+      if (this.uuid) {
+        config.headers['x-product-id'] = this.uuid
+      }
+
       return config
     })
   }
@@ -122,9 +133,9 @@ export class Widget implements WidgetInterface {
       return { page: 'leads_list', section: 'list', pipelineId: m && +m[1] }
     } else if (/leads\/detail/.test(h)) {
       const m = h.match(/\/leads\/detail\/([0-9]+)/)
-      return { page: 'leads_card', id: m && +m[1] }
+      return { page: 'lead_card', id: m && +m[1] }
     } else if (/leads\/add/.test(h)) {
-      return { page: 'leads_card', id: null }
+      return { page: 'lead_card', id: null }
     } else if (/settings\/pipeline\/leads/.test(h)) {
       const m = h.match(/\/settings\/pipeline\/leads\/([0-9]+)/)
       return { page: 'digital_pipeline', pipelineId: m && +m[1] }
@@ -170,5 +181,46 @@ export class Widget implements WidgetInterface {
     }
 
     return { page: 'unknown' }
+  }
+
+  // список юзеров по группам с фронта
+  getUsersTree(): AmoUserGroup[] {
+    const ret: AmoUserGroup[] = []
+
+    const amoGroups: any = (window as any).AMOCRM.constant('groups') || {}
+    const amoManagers: any = (window as any).AMOCRM.constant('managers') || {}
+
+    Object.keys(amoGroups).map(amoGroupKey => {
+      const groupId: number | null =
+        amoGroupKey === 'group_free_users' ? null : +amoGroupKey.replace('group_', '')
+
+      const groupUsers: AmoUser[] = []
+      Object.keys(amoManagers).map(amoManagerKey => {
+        if (amoManagers[amoManagerKey].group === amoGroupKey) {
+          const userId = +amoManagerKey
+
+          groupUsers.push({
+            id: +userId,
+            groupId: groupId,
+            key: `user-${userId}`,
+            title: amoManagers[amoManagerKey].title || 'Имя не указано',
+            avatar: amoManagers[amoManagerKey].avatar || '',
+            login: amoManagers[amoManagerKey].login || '',
+            isActive: amoManagers[amoManagerKey].active || false,
+            isAdmin: (amoManagers[amoManagerKey].is_admin || 'N') === 'Y',
+            isFree: (amoManagers[amoManagerKey].free_user || 'N') === 'Y'
+          })
+        }
+      })
+
+      ret.push({
+        id: groupId,
+        key: `group-${groupId}`,
+        title: amoGroups[amoGroupKey],
+        users: groupUsers
+      })
+    })
+
+    return ret
   }
 }

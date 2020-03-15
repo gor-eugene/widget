@@ -46,3 +46,22 @@ export interface ConstructOptions {
   product?: ProductInterface
   accountProduct?: AccountProductInterface
 }
+
+export interface AmoUser {
+  id: number
+  groupId: number | null
+  key: string
+  title: string
+  avatar: string
+  login: string
+  isActive: boolean
+  isAdmin: boolean
+  isFree: boolean
+}
+
+export interface AmoUserGroup {
+  id: number | null
+  key: string
+  title: string
+  users: AmoUser[]
+}
