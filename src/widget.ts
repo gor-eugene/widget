@@ -43,7 +43,7 @@ export class Widget implements WidgetInterface {
       baseURL: this.$amodevBaseUrl
     })
 
-    this.$amodevApi.interceptors.request.use(config => {
+    this.$amodevApi.interceptors.request.use((config) => {
       config.headers['x-amo-token'] = this.accountUser && this.accountUser.token
 
       if (this.uuid) {
@@ -60,10 +60,6 @@ export class Widget implements WidgetInterface {
   // метод проверки доступа
   can(rule: string, def: boolean = false): boolean {
     try {
-      if (this.accountUser && this.accountUser.isOwner) {
-        return true
-      }
-
       const accessSettings: any = (this.accountProduct && this.accountProduct.access) || null
 
       if (accessSettings) {
@@ -190,12 +186,12 @@ export class Widget implements WidgetInterface {
     const amoGroups: any = (window as any).AMOCRM.constant('groups') || {}
     const amoManagers: any = (window as any).AMOCRM.constant('managers') || {}
 
-    Object.keys(amoGroups).map(amoGroupKey => {
+    Object.keys(amoGroups).map((amoGroupKey) => {
       const groupId: number | null =
         amoGroupKey === 'group_free_users' ? null : +amoGroupKey.replace('group_', '')
 
       const groupUsers: AmoUser[] = []
-      Object.keys(amoManagers).map(amoManagerKey => {
+      Object.keys(amoManagers).map((amoManagerKey) => {
         if (amoManagers[amoManagerKey].group === amoGroupKey) {
           const userId = +amoManagerKey
 
